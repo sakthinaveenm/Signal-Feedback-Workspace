@@ -1,4 +1,27 @@
-# vinext-starter
+# Signal — Project Feedback Manager
+
+Track feedback, bug reports, and feature requests across apps and websites in one workspace.
+
+## Project layout
+
+- `app/`: responsive React dashboard, project directory, feedback inbox, status and priority tracking, internal notes, search, and CSV export.
+- `backend/`: standalone NestJS API with MongoDB Atlas/Mongoose, admin authentication, project-specific submission keys, filtering, summaries, and HTTP integration tests.
+- `db/` and `drizzle/`: the existing dashboard's D1 storage and schema migration.
+
+The published dashboard currently uses D1. The NestJS/MongoDB backend is ready for separate hosting and environment configuration; it is not connected to Atlas or the live dashboard yet. See [backend setup and API documentation](backend/README.md) for Atlas configuration, Docker deployment, and the server-side frontend proxy example. No live records are migrated automatically.
+
+### Backend quick start
+
+```sh
+cd backend
+npm ci
+```
+
+Copy `backend/.env.example` to `backend/.env`, configure your Atlas connection and random admin key, then run `npm run build`, `npm run db:indexes`, and `npm start`. Run `npm test` for the 14 HTTP integration tests against an isolated local MongoDB process.
+
+Keep database credentials and admin/project keys in server-side environment variables. Dependencies, local databases, build artifacts, and secret files are excluded from Git.
+
+## Frontend runtime reference
 
 A clean full-stack starter running on [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and Drizzle support.
 

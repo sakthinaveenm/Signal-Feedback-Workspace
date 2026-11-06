@@ -1,0 +1,24 @@
+// Replace the frontend's app/api/data/route.ts with this AFTER configuring
+// SIGNAL_API_URL and SIGNAL_ADMIN_API_KEY in the frontend server's environment.
+// Deploy this proxy behind the existing owner-private Site access policy.
+// For a public frontend, add server-side user authentication before forwarding.
+// Never put SIGNAL_ADMIN_API_KEY in a NEXT_PUBLIC_* variable or browser code.
+async function forward(method: 'GET' | 'POST', request?: Request) {
+  const base = process.env.SIGNAL_API_URL;
+  const key = process.env.SIGNAL_ADMIN_API_KEY;
+  if (!base || !key) return Response.json({ error: 'Signal backend is not configured.' }, { status: 503 });
+  try {
+    const result = await fetch(`${base.replace(/\/$/, '')}/v1/data`, {
+      method, headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+      ...(request ? { body: JSON.stringify(await request.json()) } : {}),
+      signal: AbortSignal.timeout(15000), cache: 'no-store',
+    });
+    const body = await result.json() as { message?: string | string[] };
+    if (!result.ok) return Response.json({ error: Array.isArray(body.message) ? body.message.join('; ') : body.message || 'Backend request failed.' }, { status: result.status });
+    return Response.json(body, { headers: { 'Cache-Control': 'no-store' } });
+  } catch {
+    return Response.json({ error: 'Unable to reach the feedback backend.' }, { status: 502 });
+  }
+}
+export function GET() { return forward('GET'); }
+export function POST(request: Request) { return forward('POST', request); }
