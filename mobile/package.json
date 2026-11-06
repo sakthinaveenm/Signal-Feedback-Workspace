@@ -5,11 +5,12 @@
   "main": "index.ts",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "typecheck": "tsc --noEmit",
     "test": "tsc -p tsconfig.test.json && node --test test-dist/test/*.test.js",
-    "export": "expo export --platform android --platform ios"
+    "export": "expo export --platform android --platform ios",
+    "build:apk": "node scripts/build-release.mjs"
   },
   "dependencies": {
     "expo": "~58.0.23",
