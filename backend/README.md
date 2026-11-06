@@ -33,7 +33,7 @@ Official references: [Atlas connection setup](https://www.mongodb.com/docs/atlas
 
 ## API
 
-All management endpoints require `Authorization: Bearer <ADMIN_API_KEY>`. This is a **single-owner service**, not a multi-user SaaS. The key gives access to all workspace projects. Keep it on the dashboard server only. If adding public user accounts later, implement per-user authentication and ownership checks before sharing management access.
+All management endpoints require `Authorization: Bearer <ADMIN_API_KEY>`. This is a **single-owner service**, not a multi-user SaaS. The key gives access to all workspace projects. Keep it on the dashboard server; the trusted owner app in `../mobile` also allows the owner to enter it at runtime and stores it in device secure storage. Never embed it in a distributed application or public browser bundle. If adding public user accounts later, implement per-user authentication and ownership checks before sharing management access.
 
 | Method | Path (prefix `/v1`) | Behavior |
 | --- | --- | --- |

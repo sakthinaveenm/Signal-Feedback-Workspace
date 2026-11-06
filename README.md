@@ -6,6 +6,7 @@ Track feedback, bug reports, and feature requests across apps and websites in on
 
 - `app/`: responsive React dashboard, project directory, feedback inbox, status and priority tracking, internal notes, search, and CSV export.
 - `backend/`: standalone NestJS API with MongoDB Atlas/Mongoose, admin authentication, project-specific submission keys, filtering, summaries, and HTTP integration tests.
+- `mobile/`: React Native/Expo owner app for Android and iOS, with secure connection storage, project management, feedback inbox, filters, pagination, and report updates. See [mobile setup](mobile/README.md).
 - `db/` and `drizzle/`: the existing dashboard's D1 storage and schema migration.
 
 The published dashboard currently uses D1. The NestJS/MongoDB backend is ready for separate hosting and environment configuration; it is not connected to Atlas or the live dashboard yet. See [backend setup and API documentation](backend/README.md) for Atlas configuration, Docker deployment, and the server-side frontend proxy example. No live records are migrated automatically.
@@ -19,7 +20,7 @@ npm ci
 
 Copy `backend/.env.example` to `backend/.env`, configure your Atlas connection and random admin key, then run `npm run build`, `npm run db:indexes`, and `npm start`. Run `npm test` for the 14 HTTP integration tests against an isolated local MongoDB process.
 
-Keep database credentials and admin/project keys in server-side environment variables. Dependencies, local databases, build artifacts, and secret files are excluded from Git.
+Keep database credentials and integration keys in server-side environment variables. The private owner mobile app accepts the admin key at runtime and keeps it in device secure storage; no keys are embedded in application source. Dependencies, local databases, build artifacts, and secret files are excluded from Git.
 
 ## Frontend runtime reference
 

@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "Signal Feedback",
+    "slug": "signal-feedback-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#F7F7FB",
+    "ios": { "supportsTablet": true, "bundleIdentifier": "com.sakthinaveenm.signalfeedback", "config": { "usesNonExemptEncryption": false } },
+    "android": { "package": "com.sakthinaveenm.signalfeedback" },
+    "plugins": ["expo-secure-store"]
+  }
+}

@@ -1,0 +1,14 @@
+export const statuses = ['New', 'Planned', 'In progress', 'Resolved'] as const;
+export const priorities = ['Low', 'Medium', 'High', 'Critical'] as const;
+export const types = ['Feedback', 'Bug', 'Feature'] as const;
+export const sources = ['Web', 'Mobile', 'Email', 'Other'] as const;
+export const platforms = ['Web', 'Mobile', 'Web & Mobile', 'Other'] as const;
+export type Status = typeof statuses[number];
+export type Priority = typeof priorities[number];
+export type Project = { id: string; name: string; url: string; platform: string; archived: boolean };
+export type Feedback = { id: string; projectId: string; title: string; description: string; type: string; source: string; status: Status; priority: Priority; contact: string; notes: string; createdAt: string };
+export type Summary = { total: number; byStatus: Record<Status, number>; byType: Record<string, number> };
+export type Connection = { url: string; key: string };
+export type FeedbackInput = { projectId: string; title: string; description: string; type: string; source: string; priority: Priority; contact: string };
+export type Filters = { projectId?: string; status?: string; type?: string; search?: string };
+export type Page = { items: Feedback[]; total: number; page: number; pages: number; limit: number };

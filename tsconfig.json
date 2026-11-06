@@ -49,6 +49,7 @@
     ".sites-runtime",
     "outputs",
     "work",
-    "backend"
+    "backend",
+    "mobile"
   ]
 }
