@@ -4,14 +4,15 @@ module.exports = function withReleaseSigning(config) {
   if (process.env.EAS_BUILD === 'true') return config;
   return withAppBuildGradle(config, (mod) => {
     if (mod.modResults.language !== 'groovy') throw new Error('Signal signing requires Groovy build.gradle.');
-    let source = mod.modResults.contents;
+    let source = mod.modResults.contents.replace("storeFile file('debug.keystore')", "// Use Android Gradle's generated development keystore.");
+    mod.modResults.contents = source;
     if (source.includes('// Signal release signing')) return mod;
     const signing = `// Signal release signing: secrets are supplied only through the build environment.
 def signalStoreFile = System.getenv('SIGNAL_STORE_FILE')
 def signalStorePassword = System.getenv('SIGNAL_STORE_PASSWORD')
 def signalKeyAlias = System.getenv('SIGNAL_KEY_ALIAS')
 def signalKeyPassword = System.getenv('SIGNAL_KEY_PASSWORD')
-if (gradle.startParameter.taskNames.any { it.toLowerCase().contains('release') } &&
+if (System.getenv('EAS_BUILD') != 'true' && gradle.startParameter.taskNames.any { it.toLowerCase().contains('release') } &&
     (!signalStoreFile || !signalStorePassword || !signalKeyAlias || !signalKeyPassword)) {
     throw new GradleException('Use npm run build:apk with your Signal release signing credentials.')
 }

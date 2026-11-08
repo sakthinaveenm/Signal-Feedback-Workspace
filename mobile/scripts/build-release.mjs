@@ -42,8 +42,8 @@ const env = { ...process.env, ANDROID_HOME: sdk, ANDROID_SDK_ROOT: sdk, NODE_ENV
   JAVA_TOOL_OPTIONS: `${process.env.JAVA_TOOL_OPTIONS || ''} ${javaCompatibility}`.trim(),
   SIGNAL_STORE_FILE: storeFile, SIGNAL_STORE_PASSWORD: credentials.storePassword,
   SIGNAL_KEY_ALIAS: credentials.alias, SIGNAL_KEY_PASSWORD: credentials.keyPassword };
-if (!process.argv.includes('--skip-prebuild')) {
-  run(process.execPath, [path.join(mobileRoot, 'node_modules/expo/bin/cli'), 'prebuild', '--platform', 'android', '--no-install'], mobileRoot, env);
+if (!process.argv.includes('--skip-prebuild') && (!existsSync(path.join(mobileRoot, 'android/app/build.gradle')) || process.argv.includes('--prebuild'))) {
+  run(process.execPath, [path.join(mobileRoot, 'node_modules/expo/bin/cli'), 'prebuild', '--platform', 'android', '--no-install', '--no-clean'], mobileRoot, env);
 }
 const android = path.join(mobileRoot, 'android');
 const args = ['app:assembleRelease', '--console=plain', '--no-daemon', '--max-workers=2', '-PreactNativeArchitectures=arm64-v8a,armeabi-v7a,x86_64'];

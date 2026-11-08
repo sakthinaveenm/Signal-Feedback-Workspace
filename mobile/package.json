@@ -11,7 +11,10 @@
     "test": "tsc -p tsconfig.test.json && node --test test-dist/test/*.test.js",
     "export": "expo export --platform android --platform ios",
     "build:apk": "node scripts/build-release.mjs",
-    "updates:configure": "node scripts/configure-updates.mjs"
+    "updates:configure": "node scripts/configure-updates.mjs",
+    "native:android": "expo prebuild --platform android --no-install --no-clean",
+    "native:ios": "expo prebuild --platform ios --no-install --no-clean",
+    "native:sync": "expo prebuild --no-install --no-clean"
   },
   "dependencies": {
     "expo": "~58.0.23",

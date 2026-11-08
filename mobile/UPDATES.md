@@ -16,7 +16,7 @@ The published v1.0.0 APK was built without `expo-updates`. It cannot receive thi
 
 2. Ensure `extra.eas.projectId` in `app.json` contains that project's real UUID. The init command usually writes it. For an existing project, `npm run updates:configure -- YOUR_PROJECT_UUID` writes the public UUID without accepting an access token. Alternatively supply `EAS_PROJECT_ID` consistently in build and update-publishing environments. Project ownership/access is enforced by Expo; this helper only validates and saves the UUID.
 
-3. Build the replacement production APK using `npm run build:apk`. The existing private `work/android-signing` key must be available so Android accepts the app as an upgrade. Install it over v1.0.0. No replacement GitHub release is created by the update integration itself.
+3. Run `npm run native:android` to apply the EAS project/update configuration to the checked-in Android project, then build the replacement production APK using `npm run build:apk`. On macOS, run `npm run native:ios` before an iOS build. EAS does not automatically prebuild when native folders are checked in. The existing private `work/android-signing` key must be available so Android accepts the app as an upgrade. Install it over v1.0.0. No replacement GitHub release is created by the update integration itself.
 
 4. Publish an initial compatible update after linking/creating the production channel:
 

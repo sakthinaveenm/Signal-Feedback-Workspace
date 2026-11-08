@@ -11,4 +11,4 @@ if (config.expo.extra?.eas?.projectId && config.expo.extra.eas.projectId !== pro
 }
 config.expo.extra = { ...config.expo.extra, eas: { ...config.expo.extra?.eas, projectId } };
 writeFileSync(configFile, JSON.stringify(config, null, 2) + '\n');
-console.log('Saved the public Expo project UUID. Build and install a new signed APK before publishing OTA updates.');
+console.log('Saved the public Expo project UUID. Run npm run native:android to sync native config, then build and install a new signed APK before publishing OTA updates.');

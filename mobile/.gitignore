@@ -8,5 +8,4 @@ test-dist/
 *.jks
 *.p12
 *.mobileprovision
-android/
-ios/
+android/.kotlin/

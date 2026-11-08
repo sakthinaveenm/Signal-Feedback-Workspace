@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">Signal Feedback</string>
+  <string name="expo_runtime_version">file:fingerprint</string>
+</resources>

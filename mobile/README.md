@@ -4,6 +4,8 @@ An Android and iOS **owner app** for the NestJS backend in `../backend`. It has 
 
 Expo in-app updates include launch/foreground checks, manual download, and a confirmed restart. See [OTA activation and publishing](UPDATES.md). The released v1.0.0 APK needs a one-time configured replacement build before it can receive OTA updates.
 
+Native Android and iOS sources are checked in under `android/` and `ios/`. See [native project workflow](NATIVE.md) for Android Studio/Xcode setup and explicit Expo config synchronization.
+
 ## Start
 
 Requires Node.js 22+, a running configured Signal NestJS API, and a physical device or compatible simulator/emulator.
@@ -60,15 +62,15 @@ With JDK 17+ and the Android SDK installed, run:
 npm run build:apk
 ```
 
-The script generates Android native files from app configuration, builds a signed release APK for `arm64-v8a`, `armeabi-v7a`, and `x86_64`, and writes `outputs/signal-feedback-1.1.0.apk` and its SHA-256 checksum at the repository root. The build requires network access to download Gradle/Maven/SDK dependencies. Set `ANDROID_HOME` if the SDK is not in the default Windows location.
+The script builds the checked-in Android project as a signed release APK for `arm64-v8a`, `armeabi-v7a`, and `x86_64`, and writes `outputs/signal-feedback-1.1.0.apk` and its SHA-256 checksum at the repository root. If the native project is missing it generates it first. The build requires network access to download Gradle/Maven/SDK dependencies. Set `ANDROID_HOME` if the SDK is not in the default Windows location.
 
 The first run creates a dedicated signing key and credentials under `work/android-signing/` at the repository root. **Back up that entire directory privately:** future updates must use the same signing key. It is excluded from Git and release assets. Set `SIGNAL_SIGNING_DIR` to another private directory if needed, or `SIGNAL_OUTPUT_DIR` to change the output location. The app contains no Atlas credentials or admin API key. On first launch, connect it to your own HTTPS NestJS API.
 
-The Expo config plugin replaces the template's debug signing for release builds. Signing passwords are passed through process environment variables, never committed or included in shell arguments. Generated Android files remain ignored; keep the config plugin and build script in source control. Windows builds also place Java socket temporary files in `work/j` to avoid packaged desktop AppData redirection issues.
+The Expo config plugin replaces the template's debug signing for release builds. Signing passwords are passed through process environment variables, never committed or included in shell arguments. Native source files are checked in; build outputs and signing keys remain ignored. Windows builds also place Java socket temporary files in `work/j` to avoid packaged desktop AppData redirection issues.
 
 The plugin keeps app CMake intermediates under `work/c` at the repository root and hashes long object directory names. This avoids Windows' native toolchain path limits without moving the checkout or mixing drive roots.
 
-For a retry with already-generated, unchanged native configuration, `npm run build:apk -- --skip-prebuild` retains native build caches. Run the normal command after changing Expo/native configuration. The plugin also sets a short CMake object path limit to avoid long generated object filenames.
+After changing Expo/native configuration, run `npm run native:android` or `npm run build:apk -- --prebuild` to sync without cleaning native edits. The normal build preserves the checked-in native project. The plugin also sets a short CMake object path limit to avoid long generated object filenames.
 
 ### EAS cloud builds
 
