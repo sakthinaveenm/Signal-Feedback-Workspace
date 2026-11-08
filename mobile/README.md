@@ -2,6 +2,8 @@
 
 An Android and iOS **owner app** for the NestJS backend in `../backend`. It has the Signal dashboard, projects, searchable/paginated feedback inbox, feedback creation, report details, status/priority updates, notes, pull-to-refresh, and connection settings. It uses real backend records; there is no demo data or local-only feedback database.
 
+Expo in-app updates include launch/foreground checks, manual download, and a confirmed restart. See [OTA activation and publishing](UPDATES.md). The released v1.0.0 APK needs a one-time configured replacement build before it can receive OTA updates.
+
 ## Start
 
 Requires Node.js 22+, a running configured Signal NestJS API, and a physical device or compatible simulator/emulator.
@@ -58,7 +60,7 @@ With JDK 17+ and the Android SDK installed, run:
 npm run build:apk
 ```
 
-The script generates Android native files from app configuration, builds a signed release APK for `arm64-v8a`, `armeabi-v7a`, and `x86_64`, and writes `outputs/signal-feedback-1.0.0.apk` and its SHA-256 checksum at the repository root. The build requires network access to download Gradle/Maven/SDK dependencies. Set `ANDROID_HOME` if the SDK is not in the default Windows location.
+The script generates Android native files from app configuration, builds a signed release APK for `arm64-v8a`, `armeabi-v7a`, and `x86_64`, and writes `outputs/signal-feedback-1.1.0.apk` and its SHA-256 checksum at the repository root. The build requires network access to download Gradle/Maven/SDK dependencies. Set `ANDROID_HOME` if the SDK is not in the default Windows location.
 
 The first run creates a dedicated signing key and credentials under `work/android-signing/` at the repository root. **Back up that entire directory privately:** future updates must use the same signing key. It is excluded from Git and release assets. Set `SIGNAL_SIGNING_DIR` to another private directory if needed, or `SIGNAL_OUTPUT_DIR` to change the output location. The app contains no Atlas credentials or admin API key. On first launch, connect it to your own HTTPS NestJS API.
 

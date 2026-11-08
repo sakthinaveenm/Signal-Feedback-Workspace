@@ -4,5 +4,5 @@
     "outDir": "test-dist", "rootDir": ".", "strict": true,
     "esModuleInterop": true, "skipLibCheck": true, "types": ["node"]
   },
-  "include": ["src/api.ts", "src/types.ts", "test/**/*.ts"]
+  "include": ["src/api.ts", "src/types.ts", "src/update-controller.ts", "test/**/*.ts"]
 }
